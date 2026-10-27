@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#14251E">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>ÁPICE / Contabilidade Estratégica — Experiência Digital Cinematográfica</title>
+  <meta name="description" content="Inteligência contábil para empresas que querem ir além. Uma experiência digital cinematográfica exclusiva.">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▲</text></svg>">
+
+  <!-- Google Fonts: Manrope & Instrument Serif -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'deep-forest': '#14251E',
+            'warm-ivory': '#F5F2EB',
+            'soft-stone': '#E8E5DD',
+            'charcoal': '#252A26',
+            'muted-olive': '#788675',
+            'accent-gold': '#C2A676',
+          },
+          fontFamily: {
+            sans: ['Manrope', 'sans-serif'],
+            serif: ['Instrument Serif', 'Georgia', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- GSAP & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Lenis Smooth Scroll -->
+  <script src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-warm-ivory text-charcoal font-sans antialiased selection:bg-deep-forest selection:text-warm-ivory">
+
+  <!-- Film Grain Overlay -->
+  <div class="film-grain" aria-hidden="true"></div>
+
+  <!-- Preloader -->
+  <div id="sitePreloader" class="fixed inset-0 z-50 flex items-center justify-center bg-deep-forest transition-opacity duration-700 pointer-events-none">
+    <div class="text-center">
+      <div class="text-warm-ivory font-serif text-3xl tracking-wider mb-2">ÁPICE</div>
+      <div class="text-warm-ivory/40 text-xs tracking-[0.3em] uppercase">Contabilidade Estratégica</div>
+    </div>
+  </div>
+
+  <!-- Minimalist Master Navbar -->
+  <header id="mainNavbar" class="fixed top-0 left-0 w-full z-40 transition-all duration-300 py-6 px-6 md:px-12 flex items-center justify-between">
+    <!-- Brand Mark -->
+    <a href="#" class="group flex items-center gap-3 text-warm-ivory transition-opacity hover:opacity-80">
+      <div class="w-8 h-8 border border-warm-ivory/30 flex items-center justify-center font-serif text-lg tracking-widest text-warm-ivory group-hover:border-warm-ivory transition-colors">
+        ▲
+      </div>
+      <div class="flex flex-col">
+        <span class="font-serif text-xl tracking-[0.15em] font-normal leading-tight text-warm-ivory">ÁPICE</span>
+        <span class="text-[9px] tracking-[0.3em] uppercase text-warm-ivory/50">Consultoria Contábil</span>
+      </div>
+    </a>
+
+    <!-- Desktop Navigation Links -->
+    <nav class="hidden md:flex items-center gap-8 text-xs font-medium tracking-[0.1em] uppercase text-warm-ivory/80">
+      <a href="#cinematic" class="hover:text-warm-ivory transition-colors nav-link">Início</a>
+      <a href="#sobre" class="hover:text-warm-ivory transition-colors nav-link">Sobre</a>
+      <a href="#servicos" class="hover:text-warm-ivory transition-colors nav-link">Serviços</a>
+      <a href="#diferenciais" class="hover:text-warm-ivory transition-colors nav-link">Diferenciais</a>
+      <a href="#quem-atendemos" class="hover:text-warm-ivory transition-colors nav-link">Segmentos</a>
+      <a href="#como-funciona" class="hover:text-warm-ivory transition-colors nav-link">Método</a>
+      <a href="#faq" class="hover:text-warm-ivory transition-colors nav-link">FAQ</a>
+    </nav>
+
+    <!-- Actions: Ambient Sound Toggle & Primary CTA -->
+    <div class="hidden sm:flex items-center gap-4">
+      <button id="soundToggle" class="px-3 py-2 rounded-full border border-warm-ivory/20 text-warm-ivory/70 hover:text-warm-ivory text-[10px] tracking-widest uppercase transition-all flex items-center gap-2" title="Alternar atmosfera sonora">
+        <span class="w-1.5 h-1.5 rounded-full bg-accent-gold animate-pulse"></span>
+        <span id="soundToggleLabel">SOM: DESLIGADO</span>
+      </button>
+
+      <button class="open-contact-modal btn-editorial btn-editorial-light text-xs">
+        Fale com um especialista <span class="text-sm font-serif">↗</span>
+      </button>
+    </div>
+
+    <!-- Mobile Menu Toggle Button -->
+    <button id="mobileMenuBtn" class="md:hidden text-warm-ivory p-2 focus:outline-none" aria-label="Abrir Menu" aria-expanded="false" aria-controls="mobileDrawer">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 8h16M4 16h16"></path>
+      </svg>
+    </button>
+  </header>
+
+  <!-- Mobile Fullscreen Navigation Drawer -->
+  <div id="mobileDrawer" class="hidden fixed inset-0 z-50 bg-deep-forest text-warm-ivory flex flex-col justify-between p-8 md:hidden" role="dialog" aria-modal="true" aria-label="Menu de Navegação">
+    <div class="flex items-center justify-between border-b border-warm-ivory/10 pb-6">
+      <div class="font-serif text-2xl tracking-widest">ÁPICE</div>
+      <button id="mobileMenuCloseBtn" class="text-warm-ivory/70 hover:text-warm-ivory p-2" aria-label="Fechar Menu">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="flex flex-col gap-6 my-auto font-serif text-3xl">
+      <a href="#cinematic" class="mobile-nav-link hover:text-accent-gold transition-colors">01. Experiência Inicial</a>
+      <a href="#sobre" class="mobile-nav-link hover:text-accent-gold transition-colors">02. Nossa Essência</a>
+      <a href="#servicos" class="mobile-nav-link hover:text-accent-gold transition-colors">03. Nossas Soluções</a>
+      <a href="#diferenciais" class="mobile-nav-link hover:text-accent-gold transition-colors">04. Diferenciais</a>
+      <a href="#quem-atendemos" class="mobile-nav-link hover:text-accent-gold transition-colors">05. Segmentos</a>
+      <a href="#como-funciona" class="mobile-nav-link hover:text-accent-gold transition-colors">06. Como Funciona</a>
+      <a href="#faq" class="mobile-nav-link hover:text-accent-gold transition-colors">07. FAQ</a>
+    </nav>
+
+    <div class="border-t border-warm-ivory/10 pt-6 flex flex-col gap-4">
+      <button class="open-contact-modal w-full btn-editorial btn-editorial-light text-center">
+        Fale com um especialista ↗
+      </button>
+      <div class="text-[10px] tracking-widest uppercase text-warm-ivory/40 text-center">
+        Ápice Contabilidade Estratégica © 2026
+      </div>
+    </div>
+  </div>
+
+  <!-- DEBUG HUD (ETAPA 3 — Verificação Técnica em Tempo Real) -->
+  <div id="cinematicDebugHUD" class="fixed top-24 right-6 z-50 bg-[#0e1a15]/95 backdrop-blur-md border border-warm-ivory/25 px-5 py-4 font-mono text-[11px] text-warm-ivory shadow-2xl flex flex-col gap-2 select-none pointer-events-auto rounded max-w-xs">
+    <div class="flex items-center justify-between border-b border-warm-ivory/20 pb-1.5">
+      <span class="text-[9px] uppercase tracking-widest text-accent-gold font-bold flex items-center gap-1.5">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        ÁPICE CINEMATIC HUD
+      </span>
+      <button onclick="document.getElementById('cinematicDebugHUD').classList.toggle('hidden')" class="text-warm-ivory/50 hover:text-warm-ivory text-xs px-1" title="Fechar HUD">✕</button>
+    </div>
+    <div class="flex justify-between">
+      <span class="text-warm-ivory/60">Scroll Progress:</span>
+      <span id="dbgProgress" class="text-emerald-400 font-bold">0.0%</span>
+    </div>
+    <div class="flex justify-between">
+      <span class="text-warm-ivory/60">Tempo do Vídeo:</span>
+      <span><span id="dbgTime" class="text-sky-300 font-bold">0.00s</span> / <span id="dbgDuration" class="text-warm-ivory/50">7.00s</span></span>
+    </div>
+    <div class="flex justify-between">
+      <span class="text-warm-ivory/60">Capítulo Atual:</span>
+      <span id="dbgChapter" class="text-amber-300 font-bold">01 / ABERTURA</span>
+    </div>
+    <div class="flex justify-between">
+      <span class="text-warm-ivory/60">Decodificador:</span>
+      <span id="dbgState" class="text-warm-ivory/80 text-[10px]">Iniciando...</span>
+    </div>
+    <div class="flex justify-between">
+      <span class="text-warm-ivory/60">Em Seeking:</span>
+      <span id="dbgSeeking" class="text-warm-ivory/70">false</span>
+    </div>
+    <button id="dbgPlayTest" class="mt-1 w-full py-1.5 px-2 bg-warm-ivory/15 hover:bg-warm-ivory/25 text-warm-ivory text-[10px] uppercase tracking-wider rounded border border-warm-ivory/20 transition-colors">
+      ▶ Ativar / Destravar Vídeo
+    </button>
+  </div>
+
+  <!-- HUD: Cinematic Timeline Progress Bar & Story Index -->
+  <div class="cinematic-hud text-warm-ivory">
+    <div class="flex flex-col gap-1">
+      <span class="hud-current-chapter text-[10px] tracking-[0.25em] uppercase text-warm-ivory/80 font-medium">01 / ABERTURA</span>
+      <div class="flex items-center gap-3">
+        <div class="hud-progress-track">
+          <div class="hud-progress-fill"></div>
+        </div>
+        <span class="hud-current-percent text-[10px] tracking-widest text-warm-ivory/50 font-mono">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 02 & 03: THE CINEMATIC SCROLL EXPERIENCE (600vh Storytelling Controller)   -->
+  <!-- ========================================================================= -->
+  <section id="cinematic" class="cinematic-container relative" aria-label="Experiência Cinematográfica Ápice">
+    
+    <!-- Pinned Viewport Container -->
+    <div id="cinematicSticky" class="cinematic-sticky">
+
+      <!-- CAMADA 1 — VÍDEO (z-index: 0) -->
+      <div class="cinematic-video-layer">
+        <video 
+          id="cinematicVideo" 
+          muted 
+          playsinline
+          webkit-playsinline
+          preload="auto"
+          class="w-full h-full object-cover select-none pointer-events-none"
+        >
+          <source src="public/videos/hero-desktop.mp4.mp4" type="video/mp4">
+          <source src="public/videos/hero-desktop.mp4" type="video/mp4">
+          <source src="./videos/hero-desktop.mp4.mp4" type="video/mp4">
+          <source src="./videos/hero-desktop.mp4" type="video/mp4">
+        </video>
+        <canvas id="cinematicCanvas" class="hidden absolute inset-0 w-full h-full object-cover pointer-events-none"></canvas>
+      </div>
+
+      <!-- CAMADA 2 — OVERLAY DE CONTRASTE (z-index: 2) -->
+      <div class="cinematic-contrast-overlay"></div>
+
+      <!-- CAMADA 3 — CINEMATIC STORY OVERLAY (z-index: 50) -->
+      <div id="cinematicStoryOverlay" class="cinematic-story-overlay">
+
+        <!-- CAPÍTULO 01 — 0% A 15% (Abertura institucional) -->
+        <article id="story-ch-1" class="story-chapter px-6 md:px-16 lg:px-24">
+          <div class="max-w-4xl mx-auto w-full text-warm-ivory">
+            <div class="inline-block mb-4 text-xs md:text-sm font-medium tracking-[0.3em] uppercase text-warm-ivory/80 border-b border-warm-ivory/30 pb-1">
+              ÁPICE / CONTABILIDADE ESTRATÉGICA
+            </div>
+            
+            <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl leading-[1.05] tracking-tight mb-6">
+              Clareza para decidir.<br>
+              <span class="font-serif italic font-normal text-warm-ivory">Estrutura para crescer.</span>
+            </h1>
+
+            <p class="text-base md:text-xl text-warm-ivory/90 max-w-xl font-light mb-8 leading-relaxed">
+              Inteligência contábil para empresas que querem ir além.
+            </p>
+
+            <div class="flex flex-wrap items-center gap-4 chapter-interactive">
+              <a href="#como-funciona" class="open-contact-modal btn-editorial btn-editorial-light">
+                Conheça nossa abordagem ↗
+              </a>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-10 right-8 md:right-16 flex items-center gap-3 text-warm-ivory/70 text-xs tracking-[0.2em] uppercase">
+              <span class="hidden sm:inline">Role para avançar a história</span>
+              <div class="w-6 h-10 border border-warm-ivory/40 rounded-full flex justify-center pt-2">
+                <div class="w-1 h-2 bg-warm-ivory rounded-full animate-bounce"></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CAPÍTULO 02 — 15% A 30% (Apresentação do problema) -->
+        <article id="story-ch-2" class="story-chapter px-6 md:px-16 lg:px-24">
+          <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center text-warm-ivory">
+            <div class="lg:col-span-7">
+              <div class="text-xs tracking-[0.3em] uppercase text-warm-ivory/60 mb-3">02 / O CENÁRIO</div>
+              <h2 class="font-serif text-4xl md:text-6xl lg:text-7xl leading-[1.1]">
+                Empreender já exige decisões demais.
+              </h2>
+            </div>
+            <div class="lg:col-span-5 lg:pl-8 flex flex-col justify-center">
+              <div class="editorial-divider mb-6"></div>
+              <p class="text-lg md:text-2xl text-warm-ivory/90 font-light leading-relaxed">
+                Sua contabilidade deveria trazer respostas, não mais complicações.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- CAPÍTULO 03 — 30% A 45% (Apresentação da solução) -->
+        <article id="story-ch-3" class="story-chapter px-6 md:px-16 lg:px-24">
+          <div class="max-w-4xl mx-auto w-full text-center text-warm-ivory">
+            <div class="text-xs tracking-[0.3em] uppercase text-warm-ivory/60 mb-4">03 / TRANSFORMAÇÃO</div>
+            <h2 class="font-serif text-4xl md:text-6xl lg:text-7xl leading-[1.1] mb-8">
+              Transformamos complexidade <span class="font-serif italic text-accent-gold font-normal">em clareza.</span>
+            </h2>
+            <div class="w-24 h-px bg-warm-ivory/40 mx-auto mb-8"></div>
+            <p class="text-base md:text-xl text-warm-ivory/90 max-w-2xl mx-auto font-light leading-relaxed">
+              Organização, acompanhamento e informação confiável para decisões mais inteligentes.
+            </p>
+          </div>
+        </article>
+
+        <!-- CAPÍTULO 04 — 45% A 65% (Diferenciais) -->
+        <article id="story-ch-4" class="story-chapter px-6 md:px-16 lg:px-24">
+          <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center text-warm-ivory">
+            <div class="lg:col-span-6">
+              <span class="text-xs tracking-[0.3em] uppercase text-warm-ivory/70 mb-3 block">POR QUE ÁPICE?</span>
+              <h2 class="font-serif text-4xl md:text-6xl leading-[1.1] mb-6">
+                Uma base mais sólida<br>
+                <span class="italic text-warm-ivory/90">para crescer.</span>
+              </h2>
+            </div>
+
+            <!-- 3 Diferenciais List -->
+            <div class="lg:col-span-6 flex flex-col gap-6">
+              <div class="border-l-2 border-warm-ivory/50 pl-6 py-2">
+                <div class="text-accent-gold font-mono text-xs mb-1">01</div>
+                <div class="font-serif text-3xl md:text-4xl text-warm-ivory">Organização</div>
+                <div class="text-sm text-warm-ivory/80 mt-1 font-light">Processos claros e informações sempre acessíveis.</div>
+              </div>
+
+              <div class="border-l-2 border-warm-ivory/50 pl-6 py-2">
+                <div class="text-accent-gold font-mono text-xs mb-1">02</div>
+                <div class="font-serif text-3xl md:text-4xl text-warm-ivory">Segurança</div>
+                <div class="text-sm text-warm-ivory/80 mt-1 font-light">Mais atenção às obrigações e aos detalhes do seu negócio.</div>
+              </div>
+
+              <div class="border-l-2 border-warm-ivory/50 pl-6 py-2">
+                <div class="text-accent-gold font-mono text-xs mb-1">03</div>
+                <div class="font-serif text-3xl md:text-4xl text-warm-ivory">Visão estratégica</div>
+                <div class="text-sm text-warm-ivory/80 mt-1 font-light">Informações que ajudam a orientar suas decisões.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CAPÍTULO 05 — 65% A 85% (Serviços) -->
+        <article id="story-ch-5" class="story-chapter px-6 md:px-16 lg:px-24">
+          <div class="max-w-6xl mx-auto w-full text-warm-ivory">
+            <div class="text-xs tracking-[0.3em] uppercase text-warm-ivory/70 mb-3">NOSSAS SOLUÇÕES</div>
+            <h2 class="font-serif text-4xl md:text-6xl leading-tight mb-10">
+              Contabilidade que acompanha<br>
+              <span class="italic text-warm-ivory/90">o seu negócio.</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div class="border-t border-warm-ivory/40 pt-6">
+                <div class="font-mono text-xs tracking-widest text-accent-gold mb-2">01</div>
+                <h3 class="font-serif text-2xl md:text-3xl mb-2">Contabilidade Empresarial</h3>
+                <p class="text-warm-ivory/80 text-sm font-light leading-relaxed">
+                  Demonstrações financeiras, conciliações e controle patrimonial com máxima transparência.
+                </p>
+              </div>
+
+              <div class="border-t border-warm-ivory/40 pt-6">
+                <div class="font-mono text-xs tracking-widest text-accent-gold mb-2">02</div>
+                <h3 class="font-serif text-2xl md:text-3xl mb-2">Gestão Fiscal e Tributária</h3>
+                <p class="text-warm-ivory/80 text-sm font-light leading-relaxed">
+                  Apuração segura de tributos, recuperação de créditos e enquadramento ideal.
+                </p>
+              </div>
+
+              <div class="border-t border-warm-ivory/40 pt-6">
+                <div class="font-mono text-xs tracking-widest text-accent-gold mb-2">03</div>
+                <h3 class="font-serif text-2xl md:text-3xl mb-2">Consultoria Estratégica</h3>
+                <p class="text-warm-ivory/80 text-sm font-light leading-relaxed">
+                  Diagnósticos societários, valuation e conselho consultivo para decisões executivas.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CAPÍTULO 06 — 85% A 100% (Conclusão cinematográfica) -->
+        <article id="story-ch-6" class="story-chapter px-6 md:px-16 lg:px-24">
+          <div class="max-w-4xl mx-auto w-full text-center text-warm-ivory">
+            <div class="text-xs tracking-[0.3em] uppercase text-warm-ivory/70 mb-4">06 / CONCLUSÃO</div>
+            
+            <h2 class="font-serif text-4xl md:text-6xl lg:text-7xl leading-[1.08] mb-6">
+              Mais liberdade para focar<br>
+              <span class="italic text-warm-ivory/90">no que realmente importa.</span>
+            </h2>
+
+            <p class="text-base md:text-xl text-warm-ivory/90 max-w-xl mx-auto font-light leading-relaxed mb-10">
+              Conte com uma contabilidade preparada para acompanhar o crescimento da sua empresa.
+            </p>
+
+            <div class="chapter-interactive flex justify-center">
+              <button class="open-contact-modal btn-editorial btn-editorial-light text-sm px-8 py-4">
+                Vamos conversar ↗
+              </button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 09: THE WEBSITE AFTER THE CINEMATIC EXPERIENCE (Editorial Design)         -->
+  <!-- ========================================================================= -->
+
+  <!-- SECTION 01 — SOBRE (01 / NOSSA ESSÊNCIA) -->
+  <section id="sobre" class="py-28 md:py-36 px-6 md:px-16 lg:px-24 bg-warm-ivory border-t border-charcoal/10">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-xs font-mono tracking-[0.25em] uppercase text-muted-olive mb-4">01 / NOSSA ESSÊNCIA</div>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <div class="lg:col-span-7">
+          <h2 class="font-serif text-4xl md:text-6xl lg:text-7xl text-charcoal leading-[1.08] tracking-tight">
+            Mais do que números.<br>
+            <span class="italic font-normal">Uma visão mais clara</span> do seu negócio.
+          </h2>
+        </div>
+
+        <div class="lg:col-span-5 flex flex-col gap-6 text-charcoal/80 font-light text-base md:text-lg leading-relaxed">
+          <p>
+            A Ápice nasceu com a convicção de que contabilidade não deve ser um centro de custos burocrático, mas sim o motor estratégico que viabiliza a expansão sustentável de negócios de alta performance.
+          </p>
+          <p>
+            Combinamos inteligência de dados com um atendimento humano dedicado. Cada cliente tem um consultor especialista responsável por decifrar regras fiscais complexas em oportunidades tangíveis de otimização de caixa e proteção patrimonial.
+          </p>
+
+          <!-- Key Metrics -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 pt-6 border-t border-charcoal/15 mt-4">
+            <div>
+              <div class="font-serif text-3xl md:text-4xl text-deep-forest">+18</div>
+              <div class="text-xs uppercase tracking-wider text-muted-olive mt-1">Anos de atuação</div>
+            </div>
+            <div>
+              <div class="font-serif text-3xl md:text-4xl text-deep-forest">99.8%</div>
+              <div class="text-xs uppercase tracking-wider text-muted-olive mt-1">Conformidade fiscal</div>
+            </div>
+            <div>
+              <div class="font-serif text-3xl md:text-4xl text-deep-forest">R$ 2.4B</div>
+              <div class="text-xs uppercase tracking-wider text-muted-olive mt-1">Faturamento gerido</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 02 — SERVIÇOS COMPLETOS (02 / NOSSAS SOLUÇÕES) -->
+  <section id="servicos" class="py-28 md:py-36 px-6 md:px-16 lg:px-24 bg-soft-stone/40 border-t border-charcoal/10">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        <div>
+          <div class="text-xs font-mono tracking-[0.25em] uppercase text-muted-olive mb-3">02 / NOSSAS SOLUÇÕES</div>
+          <h2 class="font-serif text-4xl md:text-6xl text-charcoal leading-tight">
+            Expertise para cada etapa do seu negócio.
+          </h2>
+        </div>
+        <p class="max-w-md text-charcoal/70 text-sm md:text-base font-light">
+          Atuação integrada que combina conformidade legal, planejamento preventivo e visão financeira de longo prazo.
+        </p>
+      </div>
+
+      <!-- Editorial Vertical List -->
+      <div class="border-t border-charcoal/20">
+
+        <!-- Item 1 -->
+        <div class="service-row group py-8 px-4 border-b border-charcoal/15 flex flex-col lg:flex-row lg:items-center justify-between gap-6 cursor-pointer open-contact-modal">
+          <div class="flex items-start md:items-center gap-6">
+            <span class="font-mono text-sm text-muted-olive">01</span>
+            <div>
+              <h3 class="font-serif text-2xl md:text-3xl text-charcoal group-hover:text-deep-forest transition-colors">Contabilidade Empresarial</h3>
+              <p class="text-sm text-charcoal/60 mt-1 max-w-xl font-light">Escrituração digital, balancetes mensais analíticos, DRE gerencial e relatórios de conformidade para auditorias.</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-4 text-xs font-mono tracking-widest text-charcoal/70 uppercase">
+            <span>Diagnóstico Incluso</span>
+            <span class="service-arrow transition-transform text-xl font-serif">↗</span>
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="service-row group py-8 px-4 border-b border-charcoal/15 flex flex-col lg:flex-row lg:items-center justify-between gap-6 cursor-pointer open-contact-modal">
+          <div class="flex items-start md:items-center gap-6">
+            <span class="font-mono text-sm text-muted-olive">02</span>
+            <div>
+              <h3 class="font-serif text-2xl md:text-3xl text-charcoal group-hover:text-deep-forest transition-colors">Gestão Fiscal e Tributária</h3>
+              <p class="text-sm text-charcoal/60 mt-1 max-w-xl font-light">Apuração segura do Simples Nacional, Lucro Presumido e Lucro Real, com cruzamento preventivo de malha fiscal.</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-4 text-xs font-mono tracking-widest text-charcoal/70 uppercase">
+            <span>Blindagem SPED</span>
+            <span class="service-arrow transition-transform text-xl font-serif">↗</span>
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="service-row group py-8 px-4 border-b border-charcoal/15 flex flex-col lg:flex-row lg:items-center justify-between gap-6 cursor-pointer open-contact-modal">
+          <div class="flex items-start md:items-center gap-6">
+            <span class="font-mono text-sm text-muted-olive">03</span>
+            <div>
+              <h3 class="font-serif text-2xl md:text-3xl text-charcoal group-hover:text-deep-forest transition-colors">Departamento Pessoal & Trabalhista</h3>
+              <p class="text-sm text-charcoal/60 mt-1 max-w-xl font-light">Folha de pagamento inteligente, eSocial, gestão de benefícios, rescisões e assessoria jurídica trabalhista preventiva.</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-4 text-xs font-mono tracking-widest text-charcoal/70 uppercase">
+            <span>Gestão Humanizada</span>
+            <span class="service-arrow transition-transform text-xl font-serif">↗</span>
+          </div>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="service-row group py-8 px-4 border-b border-charcoal/15 flex flex-col lg:flex-row lg:items-center justify-between gap-6 cursor-pointer open-contact-modal">
+          <div class="flex items-start md:items-center gap-6">
+            <span class="font-mono text-sm text-muted-olive">04</span>
+            <div>
+              <h3 class="font-serif text-2xl md:text-3xl text-charcoal group-hover:text-deep-forest transition-colors">Abertura & Reestruturação de Empresas</h3>
+              <p class="text-sm text-charcoal/60 mt-1 max-w-xl font-light">Constituição ágil, alteração contratual, cisão, fusão, reorganização societária e escolha da melhor estrutura societária.</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-4 text-xs font-mono tracking-widest text-charcoal/70 uppercase">
+            <span>Agilidade Digital</span>
+            <span class="service-arrow transition-transform text-xl font-serif">↗</span>
+          </div>
+        </div>
+
+        <!-- Item 5 -->
+        <div class="service-row group py-8 px-4 border-b border-charcoal/15 flex flex-col lg:flex-row lg:items-center justify-between gap-6 cursor-pointer open-contact-modal">
+          <div class="flex items-start md:items-center gap-6">
+            <span class="font-mono text-sm text-muted-olive">05</span>
+            <div>
+              <h3 class="font-serif text-2xl md:text-3xl text-charcoal group-hover:text-deep-forest transition-colors">Planejamento Tributário Estratégico</h3>
+              <p class="text-sm text-charcoal/60 mt-1 max-w-xl font-light">Estudos analíticos para elisão fiscal lícita, aproveitamento de créditos acumulados e redução de alíquotas efetivas.</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-4 text-xs font-mono tracking-widest text-charcoal/70 uppercase">
+            <span>Economia Lícita</span>
+            <span class="service-arrow transition-transform text-xl font-serif">↗</span>
+          </div>
+        </div>
+
+        <!-- Item 6 -->
+        <div class="service-row group py-8 px-4 border-b border-charcoal/15 flex flex-col lg:flex-row lg:items-center justify-between gap-6 cursor-pointer open-contact-modal">
+          <div class="flex items-start md:items-center gap-6">
+            <span class="font-mono text-sm text-muted-olive">06</span>
+            <div>
+              <h3 class="font-serif text-2xl md:text-3xl text-charcoal group-hover:text-deep-forest transition-colors">Consultoria Empresarial & BPO Financeiro</h3>
+              <p class="text-sm text-charcoal/60 mt-1 max-w-xl font-light">Terceirização do contas a pagar/receber, conciliação diária, valuation e conselho consultivo para decisões de expansão.</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-4 text-xs font-mono tracking-widest text-charcoal/70 uppercase">
+            <span>Gestão Executiva</span>
+            <span class="service-arrow transition-transform text-xl font-serif">↗</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 03 — DIFERENCIAIS (Deep Forest Background) -->
+  <section id="diferenciais" class="py-28 md:py-36 px-6 md:px-16 lg:px-24 bg-deep-forest text-warm-ivory">
+    <div class="max-w-7xl mx-auto">
+      <div class="max-w-3xl mb-20">
+        <div class="text-xs font-mono tracking-[0.25em] uppercase text-warm-ivory/60 mb-3">03 / NOSSOS DIFERENCIAIS</div>
+        <h2 class="font-serif text-4xl md:text-6xl lg:text-7xl leading-[1.08] text-warm-ivory">
+          Precisão nos detalhes.<br>
+          <span class="italic font-normal text-warm-ivory/80">Visão para o futuro.</span>
+        </h2>
+      </div>
+
+      <!-- 4 Editorial Differentiators Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        
+        <div class="border-t border-warm-ivory/20 pt-8 flex flex-col justify-between min-h-[260px]">
+          <div>
+            <div class="font-mono text-xs tracking-widest text-accent-gold mb-4">01</div>
+            <h3 class="font-serif text-2xl md:text-3xl mb-3 text-warm-ivory">Atendimento próximo</h3>
+            <p class="text-warm-ivory/70 text-sm font-light leading-relaxed">
+              Você não fala com robôs ou tickets genéricos. Sua empresa tem um contador dedicado com canal direto no WhatsApp e reuniões periódicas.
+            </p>
+          </div>
+          <div class="text-xs uppercase tracking-widest text-warm-ivory/40 pt-4">Tempo de resposta < 1h</div>
+        </div>
+
+        <div class="border-t border-warm-ivory/20 pt-8 flex flex-col justify-between min-h-[260px]">
+          <div>
+            <div class="font-mono text-xs tracking-widest text-accent-gold mb-4">02</div>
+            <h3 class="font-serif text-2xl md:text-3xl mb-3 text-warm-ivory">Visão estratégica</h3>
+            <p class="text-warm-ivory/70 text-sm font-light leading-relaxed">
+              Relatórios e balanços desenhados para tomada de decisão: margem de contribuição, ponto de equilíbrio e planejamento orçamentário.
+            </p>
+          </div>
+          <div class="text-xs uppercase tracking-widest text-warm-ivory/40 pt-4">Dashboards executivos</div>
+        </div>
+
+        <div class="border-t border-warm-ivory/20 pt-8 flex flex-col justify-between min-h-[260px]">
+          <div>
+            <div class="font-mono text-xs tracking-widest text-accent-gold mb-4">03</div>
+            <h3 class="font-serif text-2xl md:text-3xl mb-3 text-warm-ivory">Processos simplificados</h3>
+            <p class="text-warm-ivory/70 text-sm font-light leading-relaxed">
+              Zero burocracia desnecessária. Plataforma em nuvem 100% digital, envio fácil de notas e integração com seus softwares de gestão.
+            </p>
+          </div>
+          <div class="text-xs uppercase tracking-widest text-warm-ivory/40 pt-4">Ecossistema em nuvem</div>
+        </div>
+
+        <div class="border-t border-warm-ivory/20 pt-8 flex flex-col justify-between min-h-[260px]">
+          <div>
+            <div class="font-mono text-xs tracking-widest text-accent-gold mb-4">04</div>
+            <h3 class="font-serif text-2xl md:text-3xl mb-3 text-warm-ivory">Compromisso com o negócio</h3>
+            <p class="text-warm-ivory/70 text-sm font-light leading-relaxed">
+              Assumimos a responsabilidade técnica e contratual de manter sua empresa imune a multas e passivos trabalhistas ou fiscais.
+            </p>
+          </div>
+          <div class="text-xs uppercase tracking-widest text-warm-ivory/40 pt-4">Seguro de responsabilidade civil</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 04 — QUEM ATENDEMOS (Modular Editorial Grid) -->
+  <section id="quem-atendemos" class="py-28 md:py-36 px-6 md:px-16 lg:px-24 bg-warm-ivory border-t border-charcoal/10">
+    <div class="max-w-7xl mx-auto">
+      <div class="max-w-3xl mb-16">
+        <div class="text-xs font-mono tracking-[0.25em] uppercase text-muted-olive mb-3">04 / SEGMENTOS ESPECIALIZADOS</div>
+        <h2 class="font-serif text-4xl md:text-6xl text-charcoal leading-tight">
+          Cada negócio tem seus desafios.<br>
+          <span class="italic font-normal">Nós entendemos isso.</span>
+        </h2>
+      </div>
+
+      <!-- 5 Segments Modular Composition -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <div class="p-8 border border-charcoal/15 bg-white/60 hover:bg-white transition-all flex flex-col justify-between min-h-[240px]">
+          <div>
+            <span class="text-xs font-mono uppercase tracking-widest text-muted-olive">Segmento 01</span>
+            <h3 class="font-serif text-2xl text-charcoal mt-2 mb-3">Prestadores de Serviços</h3>
+            <p class="text-charcoal/70 text-sm font-light leading-relaxed">
+              Otimização de ISS, cálculo de Fator R para redução tributária no Simples Nacional e emissão automatizada de NFS-e.
+            </p>
+          </div>
+          <div class="text-xs text-deep-forest font-semibold mt-4">Simples Nacional & Lucro Presumido</div>
+        </div>
+
+        <div class="p-8 border border-charcoal/15 bg-white/60 hover:bg-white transition-all flex flex-col justify-between min-h-[240px]">
+          <div>
+            <span class="text-xs font-mono uppercase tracking-widest text-muted-olive">Segmento 02</span>
+            <h3 class="font-serif text-2xl text-charcoal mt-2 mb-3">Comércio & E-commerce</h3>
+            <p class="text-charcoal/70 text-sm font-light leading-relaxed">
+              Gestão rigorosa de ICMS-ST, DIFAL em operações interestaduais e parametrização de estoques para evitar bitributação.
+            </p>
+          </div>
+          <div class="text-xs text-deep-forest font-semibold mt-4">Varejo Físico & Marketplaces</div>
+        </div>
+
+        <div class="p-8 border border-charcoal/15 bg-white/60 hover:bg-white transition-all flex flex-col justify-between min-h-[240px]">
+          <div>
+            <span class="text-xs font-mono uppercase tracking-widest text-muted-olive">Segmento 03</span>
+            <h3 class="font-serif text-2xl text-charcoal mt-2 mb-3">Profissionais Liberais</h3>
+            <p class="text-charcoal/70 text-sm font-light leading-relaxed">
+              Médicos, dentistas, arquitetos e advogados: estruturação de PJ médica, livro caixa e distribuição isenta de lucros.
+            </p>
+          </div>
+          <div class="text-xs text-deep-forest font-semibold mt-4">Equiparação Hospitalar & Sociedades</div>
+        </div>
+
+        <div class="p-8 border border-charcoal/15 bg-white/60 hover:bg-white transition-all flex flex-col justify-between min-h-[240px]">
+          <div>
+            <span class="text-xs font-mono uppercase tracking-widest text-muted-olive">Segmento 04</span>
+            <h3 class="font-serif text-2xl text-charcoal mt-2 mb-3">Empresas de Tecnologia</h3>
+            <p class="text-charcoal/70 text-sm font-light leading-relaxed">
+              SaaS, agências e desenvolvedores recebendo do exterior. Isenção de PIS/COFINS em exportação de serviços e Lei do Bem.
+            </p>
+          </div>
+          <div class="text-xs text-deep-forest font-semibold mt-4">Câmbio & Faturamento Internacional</div>
+        </div>
+
+        <div class="p-8 border border-charcoal/15 bg-white/60 hover:bg-white transition-all flex flex-col justify-between min-h-[240px] col-span-1 md:col-span-2 lg:col-span-2">
+          <div>
+            <span class="text-xs font-mono uppercase tracking-widest text-muted-olive">Segmento 05</span>
+            <h3 class="font-serif text-2xl text-charcoal mt-2 mb-3">Pequenas e Médias Empresas (PMEs)</h3>
+            <p class="text-charcoal/70 text-sm font-light leading-relaxed">
+              Empresas em fase de expansão que necessitam de transição segura para o Lucro Real, estruturação de governança financeira e auditoria de contratos sociais.
+            </p>
+          </div>
+          <div class="text-xs text-deep-forest font-semibold mt-4">Assessoria Contábil Consultiva Contínua</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 05 — COMO FUNCIONA (Scroll Progress Timeline) -->
+  <section id="como-funciona" class="py-28 md:py-36 px-6 md:px-16 lg:px-24 bg-soft-stone/30 border-t border-charcoal/10">
+    <div class="max-w-7xl mx-auto">
+      <div class="max-w-2xl mb-16">
+        <div class="text-xs font-mono tracking-[0.25em] uppercase text-muted-olive mb-3">05 / MÉTODO DE TRABALHO</div>
+        <h2 class="font-serif text-4xl md:text-6xl text-charcoal leading-tight">
+          Uma contabilidade mais simples começa aqui.
+        </h2>
+      </div>
+
+      <!-- Progressive Timeline -->
+      <div class="relative border-l border-charcoal/20 ml-4 md:ml-8 pl-8 md:pl-12 flex flex-col gap-14">
+        <!-- Dynamic vertical active fill bar -->
+        <div class="timeline-progress-bar absolute left-[-1px] top-0 w-[2px] bg-deep-forest h-0 transition-all"></div>
+
+        <!-- Step 1 -->
+        <div class="timeline-step-card transition-all">
+          <span class="inline-block px-3 py-1 bg-deep-forest text-warm-ivory font-mono text-xs mb-3">PASSO 01</span>
+          <h3 class="font-serif text-3xl text-charcoal mb-2">Primeiro contato & Diagnóstico</h3>
+          <p class="text-charcoal/70 text-base max-w-xl font-light leading-relaxed">
+            Agendamos uma conversa confidencial de 30 minutos para mapear o enquadramento fiscal atual da sua empresa e identificar riscos ou pagamentos indevidos.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="timeline-step-card transition-all">
+          <span class="inline-block px-3 py-1 bg-deep-forest text-warm-ivory font-mono text-xs mb-3">PASSO 02</span>
+          <h3 class="font-serif text-3xl text-charcoal mb-2">Entendimento do negócio</h3>
+          <p class="text-charcoal/70 text-base max-w-xl font-light leading-relaxed">
+            Analisamos a fundo suas margens, volume de notas fiscais, equipe contratada e metas de expansão para desenhar uma proposta customizada.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="timeline-step-card transition-all">
+          <span class="inline-block px-3 py-1 bg-deep-forest text-warm-ivory font-mono text-xs mb-3">PASSO 03</span>
+          <h3 class="font-serif text-3xl text-charcoal mb-2">Organização e implantação</h3>
+          <p class="text-charcoal/70 text-base max-w-xl font-light leading-relaxed">
+            Realizamos a transição sem que você precise se preocupar com atrito com o contador anterior. Cuidamos de todo o histórico, migração de dados e cadastros.
+          </p>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="timeline-step-card transition-all">
+          <span class="inline-block px-3 py-1 bg-deep-forest text-warm-ivory font-mono text-xs mb-3">PASSO 04</span>
+          <h3 class="font-serif text-3xl text-charcoal mb-2">Acompanhamento contínuo</h3>
+          <p class="text-charcoal/70 text-base max-w-xl font-light leading-relaxed">
+            Sua empresa passa a operar com relatórios mensais claros, guias sempre entregues com antecedência e suporte consultivo contínuo.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 06 — PROVA SOCIAL (Editorial Quotes) -->
+  <section class="py-28 md:py-36 px-6 md:px-16 lg:px-24 bg-warm-ivory border-t border-charcoal/10">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-xs font-mono tracking-[0.25em] uppercase text-muted-olive mb-4">06 / PERSPECTIVAS DO MERCADO</div>
+      
+      <div class="border-t border-charcoal/20 pt-12">
+        <blockquote class="font-serif text-3xl md:text-5xl lg:text-6xl text-charcoal leading-[1.15] mb-8">
+          "A Ápice transformou a forma como enxergamos nossos custos fiscais. Deixamos de ver a contabilidade como burocracia e passamos a utilizá-la como alavanca de crescimento."
+        </blockquote>
+
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-charcoal/15 pb-8">
+          <div>
+            <div class="font-semibold text-charcoal text-base">Diretoria Executiva</div>
+            <div class="text-xs text-muted-olive uppercase tracking-wider">Grupo Empresarial de Tecnologia & Serviços</div>
+          </div>
+          <div class="text-xs font-mono text-charcoal/50 uppercase tracking-widest">
+            Caso demonstrativo registrado / SP
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 07 — PERGUNTAS FREQUENTES (FAQ Accordion) -->
+  <section id="faq" class="py-28 md:py-36 px-6 md:px-16 lg:px-24 bg-soft-stone/30 border-t border-charcoal/10">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-xs font-mono tracking-[0.25em] uppercase text-muted-olive mb-3">07 / ESCLARECIMENTOS</div>
+      <h2 class="font-serif text-4xl md:text-5xl text-charcoal leading-tight mb-12">
+        Perguntas frequentes.
+      </h2>
+
+      <div class="flex flex-col divide-y divide-charcoal/15 border-t border-b border-charcoal/15">
+        
+        <!-- FAQ 1 -->
+        <div class="faq-item py-6">
+          <button class="faq-header w-full flex items-center justify-between text-left focus:outline-none group">
+            <span class="font-serif text-xl md:text-2xl text-charcoal group-hover:text-deep-forest transition-colors">Como funciona o processo de troca de contador?</span>
+            <span class="accordion-icon text-2xl font-light text-muted-olive transition-transform duration-300 ml-4">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="pt-4 text-charcoal/70 text-sm md:text-base font-light leading-relaxed overflow-hidden">
+              O processo é 100% conduzido pela Ápice. Nós solicitamos a documentação fiscal e contábil diretamente ao seu antigo escritório via termo de transferência de responsabilidade técnica, sem causar qualquer atrito ou interrupção na rotina da sua empresa.
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-item py-6">
+          <button class="faq-header w-full flex items-center justify-between text-left focus:outline-none group">
+            <span class="font-serif text-xl md:text-2xl text-charcoal group-hover:text-deep-forest transition-colors">A Ápice atende empresas de quais regimes tributários?</span>
+            <span class="accordion-icon text-2xl font-light text-muted-olive transition-transform duration-300 ml-4">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="pt-4 text-charcoal/70 text-sm md:text-base font-light leading-relaxed overflow-hidden">
+              Atendemos negócios optantes pelo Simples Nacional, Lucro Presumido e Lucro Real. Temos times especializados para cada regime, garantindo que o enquadramento respeite as particularidades de cada setor.
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-item py-6">
+          <button class="faq-header w-full flex items-center justify-between text-left focus:outline-none group">
+            <span class="font-serif text-xl md:text-2xl text-charcoal group-hover:text-deep-forest transition-colors">Vocês oferecem planejamento tributário para redução lícita de impostos?</span>
+            <span class="accordion-icon text-2xl font-light text-muted-olive transition-transform duration-300 ml-4">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="pt-4 text-charcoal/70 text-sm md:text-base font-light leading-relaxed overflow-hidden">
+              Sim. Realizamos simulações comparativas periódicas entre os regimes para garantir que sua empresa nunca pague mais tributos do que o estritamente exigido por lei, utilizando todos os benefícios e incentivos fiscais aplicáveis.
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-item py-6">
+          <button class="faq-header w-full flex items-center justify-between text-left focus:outline-none group">
+            <span class="font-serif text-xl md:text-2xl text-charcoal group-hover:text-deep-forest transition-colors">Como é feito o suporte no dia a dia?</span>
+            <span class="accordion-icon text-2xl font-light text-muted-olive transition-transform duration-300 ml-4">+</span>
+          </button>
+          <div class="accordion-content">
+            <div class="pt-4 text-charcoal/70 text-sm md:text-base font-light leading-relaxed overflow-hidden">
+              Você conta com canais diretos e ágeis: WhatsApp corporativo, e-mail dedicado e reuniões por videoconferência com o consultor sênior responsável pela sua conta. Sem tickets intermináveis.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 08 — FINAL CTA (Deep Forest Background) -->
+  <section class="py-32 md:py-44 px-6 md:px-16 lg:px-24 bg-deep-forest text-warm-ivory text-center">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-xs font-mono tracking-[0.3em] uppercase text-warm-ivory/50 mb-6">DÊ O PRÓXIMO PASSO</div>
+      
+      <h2 class="font-serif text-5xl md:text-7xl lg:text-8xl leading-[1.05] tracking-tight mb-8">
+        Seu próximo capítulo começa com decisões mais inteligentes.
+      </h2>
+
+      <p class="text-lg md:text-xl text-warm-ivory/80 font-light max-w-xl mx-auto mb-12 leading-relaxed">
+        Agende uma análise sem compromisso e descubra como uma contabilidade estratégica pode fortalecer a sua empresa.
+      </p>
+
+      <button class="open-contact-modal btn-editorial btn-editorial-light text-sm px-10 py-5">
+        Vamos conversar ↗
+      </button>
+    </div>
+  </section>
+
+  <!-- SECTION 09 — FOOTER -->
+  <footer class="py-16 px-6 md:px-16 lg:px-24 bg-[#0e1a15] text-warm-ivory border-t border-warm-ivory/10">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
+        
+        <div class="md:col-span-5">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-8 h-8 border border-warm-ivory/40 flex items-center justify-center font-serif text-lg text-warm-ivory">
+              ▲
+            </div>
+            <span class="font-serif text-2xl tracking-widest">ÁPICE</span>
+          </div>
+          <p class="text-warm-ivory/60 text-sm max-w-sm font-light leading-relaxed">
+            Inteligência contábil, consultoria tributária e visão de negócios para organizações que exigem o mais alto padrão de excelência.
+          </p>
+        </div>
+
+        <div class="md:col-span-2">
+          <div class="text-xs font-mono uppercase tracking-widest text-accent-gold mb-4">Navegação</div>
+          <div class="flex flex-col gap-2.5 text-xs text-warm-ivory/70">
+            <a href="#cinematic" class="hover:text-warm-ivory transition-colors">Início</a>
+            <a href="#sobre" class="hover:text-warm-ivory transition-colors">Nossa Essência</a>
+            <a href="#servicos" class="hover:text-warm-ivory transition-colors">Serviços</a>
+            <a href="#diferenciais" class="hover:text-warm-ivory transition-colors">Diferenciais</a>
+            <a href="#como-funciona" class="hover:text-warm-ivory transition-colors">Método</a>
+          </div>
+        </div>
+
+        <div class="md:col-span-2">
+          <div class="text-xs font-mono uppercase tracking-widest text-accent-gold mb-4">Soluções</div>
+          <div class="flex flex-col gap-2.5 text-xs text-warm-ivory/70">
+            <span>Contabilidade Empresarial</span>
+            <span>Gestão Tributária</span>
+            <span>Departamento Pessoal</span>
+            <span>Planejamento Fiscal</span>
+            <span>BPO Financeiro</span>
+          </div>
+        </div>
+
+        <div class="md:col-span-3">
+          <div class="text-xs font-mono uppercase tracking-widest text-accent-gold mb-4">Contato Direto</div>
+          <div class="flex flex-col gap-2.5 text-xs text-warm-ivory/70 font-light">
+            <span>Av. Paulista, 1000 — Bela Vista</span>
+            <span>São Paulo — SP, Brasil</span>
+            <span>contato@apicecontabilidade.com.br</span>
+            <span class="mt-2 text-accent-gold font-mono">+55 (11) 3456-7890</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="border-t border-warm-ivory/10 pt-8 flex flex-col md:flex-row items-center justify-between text-[11px] text-warm-ivory/40 tracking-wider">
+        <div>
+          © 2026 ÁPICE CONTABILIDADE ESTRATÉGICA LTDA. TODOS OS DIREITOS RESERVADOS. CNPJ: 00.000.000/0001-00. CRC/SP ATIVO.
+        </div>
+        <div class="flex items-center gap-6 mt-4 md:mt-0">
+          <a href="#" class="hover:text-warm-ivory transition-colors">Privacidade & LGPD</a>
+          <a href="#" class="hover:text-warm-ivory transition-colors">Termos de Serviço</a>
+          <a href="#cinematic" class="hover:text-warm-ivory transition-colors">Voltar ao topo ↑</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- INTERACTIVE MODAL: CONSULTORIA ESTRATÉGICA                                -->
+  <!-- ========================================================================= -->
+  <div id="contactModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm">
+    <div class="modal-card bg-warm-ivory text-charcoal w-full max-w-xl p-8 md:p-10 border border-charcoal/20 shadow-2xl relative">
+      
+      <!-- Close Button -->
+      <button id="closeModalBtn" class="absolute top-6 right-6 text-charcoal/50 hover:text-charcoal p-2" aria-label="Fechar Modal">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+
+      <div class="text-xs font-mono tracking-[0.25em] uppercase text-muted-olive mb-2">DIAGNÓSTICO EMPRESARIAL</div>
+      <h3 class="font-serif text-3xl md:text-4xl text-charcoal mb-4">Fale com um especialista Ápice</h3>
+      <p class="text-sm text-charcoal/70 mb-6 font-light">
+        Preencha os dados abaixo para receber uma análise preliminar da estrutura fiscal da sua empresa.
+      </p>
+
+      <form id="contactForm" class="flex flex-col gap-4">
+        <div>
+          <label class="block text-xs uppercase tracking-wider text-charcoal/70 mb-1 font-medium">Nome Completo</label>
+          <input id="inputName" type="text" required placeholder="Ex.: Carolina Mendes" class="w-full bg-white border border-charcoal/20 px-4 py-3 text-sm focus:outline-none focus:border-deep-forest transition-colors">
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs uppercase tracking-wider text-charcoal/70 mb-1 font-medium">E-mail Corporativo</label>
+            <input type="email" required placeholder="carolina@empresa.com.br" class="w-full bg-white border border-charcoal/20 px-4 py-3 text-sm focus:outline-none focus:border-deep-forest transition-colors">
+          </div>
+          <div>
+            <label class="block text-xs uppercase tracking-wider text-charcoal/70 mb-1 font-medium">WhatsApp / Telefone</label>
+            <input type="tel" required placeholder="(11) 99999-9999" class="w-full bg-white border border-charcoal/20 px-4 py-3 text-sm focus:outline-none focus:border-deep-forest transition-colors">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs uppercase tracking-wider text-charcoal/70 mb-1 font-medium">Nome da Empresa</label>
+            <input id="inputCompany" type="text" placeholder="Nome da empresa" class="w-full bg-white border border-charcoal/20 px-4 py-3 text-sm focus:outline-none focus:border-deep-forest transition-colors">
+          </div>
+          <div>
+            <label class="block text-xs uppercase tracking-wider text-charcoal/70 mb-1 font-medium">Faturamento Estimado</label>
+            <select class="w-full bg-white border border-charcoal/20 px-4 py-3 text-sm focus:outline-none focus:border-deep-forest transition-colors">
+              <option>Até R$ 50 mil / mês</option>
+              <option>R$ 50 mil a R$ 200 mil / mês</option>
+              <option>R$ 200 mil a R$ 1 milhão / mês</option>
+              <option>Acima de R$ 1 milhão / mês</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-editorial btn-editorial-dark w-full mt-2 py-4">
+          Solicitar Diagnóstico Estratégico ↗
+        </button>
+      </form>
+
+      <!-- Success Notification Slot -->
+      <div id="contactSuccess" class="hidden text-center py-6">
+        <div class="w-12 h-12 rounded-full bg-deep-forest text-warm-ivory flex items-center justify-center mx-auto mb-4 font-serif text-xl">
+          ✓
+        </div>
+        <h4 class="font-serif text-2xl text-deep-forest mb-2">Solicitação enviada com sucesso!</h4>
+        <p class="text-sm text-charcoal/70 mb-6 font-light">
+          Agradecemos pelo contato, <span class="client-name-slot font-semibold">Cliente</span>. Nosso sócio consultor entrará em contato em menos de 1 hora.
+        </p>
+        <a id="sendWhatsappBtn" href="#" target="_blank" class="btn-editorial btn-editorial-dark inline-flex text-xs">
+          Conversar Imediatamente no WhatsApp ↗
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- JavaScript Modules -->
+  <script src="js/cinematic.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

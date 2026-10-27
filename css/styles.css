@@ -1,0 +1,762 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --color-deep-forest: #14251E;
+  --color-warm-ivory: #F5F2EB;
+  --color-soft-stone: #E8E5DD;
+  --color-charcoal: #252A26;
+  --color-muted-olive: #788675;
+  --color-white: #FFFFFF;
+  --color-accent-gold: #C2A676;
+
+  /* Fluid type scale — clamp(min, preferred, max) */
+  --text-xs:   clamp(0.65rem, 2vw, 0.75rem);
+  --text-sm:   clamp(0.75rem, 2.5vw, 0.875rem);
+  --text-base: clamp(0.875rem, 3vw, 1rem);
+  --text-lg:   clamp(1rem, 3.5vw, 1.125rem);
+  --text-xl:   clamp(1.125rem, 4vw, 1.25rem);
+  --text-2xl:  clamp(1.25rem, 5vw, 1.5rem);
+  --text-3xl:  clamp(1.5rem, 6vw, 1.875rem);
+  --text-4xl:  clamp(1.75rem, 7vw, 2.25rem);
+  --text-5xl:  clamp(2rem, 8vw, 3rem);
+  --text-6xl:  clamp(2.25rem, 9vw, 3.75rem);
+  --text-7xl:  clamp(2.5rem, 10vw, 4.5rem);
+  --text-8xl:  clamp(2.75rem, 11vw, 6rem);
+
+  /* Safe spacing for sections */
+  --section-py: clamp(3.5rem, 10vw, 9rem);
+  --section-px: clamp(1.25rem, 5vw, 6rem);
+}
+
+/* Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  background-color: var(--color-warm-ivory);
+  color: var(--color-charcoal);
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  scroll-behavior: auto !important;
+  overflow-x: clip;
+  /* Prevent iOS text size adjustment */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  width: 100%;
+  overflow-x: clip;
+  background-color: var(--color-warm-ivory);
+  line-height: 1.6;
+  /* Prevent horizontal bounce on iOS */
+  overscroll-behavior-x: none;
+}
+
+/* Typography Classes */
+.font-serif-editorial {
+  font-family: 'Instrument Serif', Georgia, serif;
+}
+
+.font-sans-editorial {
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Subtle Film Grain Texture Overlay */
+.film-grain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Custom Selection */
+::selection {
+  background-color: var(--color-deep-forest);
+  color: var(--color-warm-ivory);
+}
+
+/* ========================================================================= */
+/* CINEMATIC THREE-LAYER ARCHITECTURE                                        */
+/* ========================================================================= */
+
+.cinematic-container {
+  position: relative;
+  width: 100%;
+  height: 600vh; /* Calibrated extended scroll distance */
+  background: var(--color-deep-forest);
+}
+
+.cinematic-sticky {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* CAMADA 1 — VÍDEO (z-index: 0) */
+.cinematic-video-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background-color: #0b1511;
+  overflow: hidden;
+}
+
+.cinematic-video-layer video,
+.cinematic-video-layer canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* CAMADA 2 — OVERLAY DE CONTRASTE (z-index: 2) */
+.cinematic-overlay,
+.cinematic-contrast-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, rgba(20, 37, 30, 0.35) 0%, rgba(15, 28, 23, 0.72) 100%),
+              linear-gradient(180deg, rgba(20, 37, 30, 0.55) 0%, rgba(20, 37, 30, 0.15) 40%, rgba(20, 37, 30, 0.45) 75%, rgba(20, 37, 30, 0.8) 100%);
+  transition: opacity 0.5s ease;
+}
+
+/* CAMADA 3 — CINEMATIC STORY OVERLAY (z-index: 50) */
+.cinematic-story-overlay,
+.cinematic-content-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+  pointer-events: none;
+  transform: translateZ(50px);
+  isolation: isolate;
+  color: #F5F2EB !important;
+}
+
+/* Individual Story Chapters */
+.story-chapter,
+.chapter-view {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  color: #F5F2EB !important;
+  will-change: opacity, transform;
+}
+
+/* Immediate visibility for Chapter 01 */
+#story-ch-1,
+#chapter-1 {
+  opacity: 1;
+  visibility: visible;
+}
+
+#story-ch-1 .chapter-interactive,
+#chapter-1 .chapter-interactive {
+  pointer-events: auto;
+}
+
+/* Guaranteed Readability Over Video (AAA Contrast) */
+.story-chapter h1,
+.story-chapter h2,
+.story-chapter h3,
+.story-chapter p,
+.story-chapter span,
+.story-chapter div,
+.chapter-view h1,
+.chapter-view h2,
+.chapter-view h3,
+.chapter-view p,
+.chapter-view span,
+.chapter-view div {
+  color: #F5F2EB;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.85), 0 1px 4px rgba(0, 0, 0, 0.95);
+}
+
+.story-chapter .text-accent-gold,
+.chapter-view .text-accent-gold {
+  color: #C2A676 !important;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.85);
+}
+
+/* Chapter Interactive CTAs should be clickable when active */
+.chapter-interactive {
+  pointer-events: auto;
+}
+
+/* Editorial Dividers */
+.editorial-divider {
+  height: 1px;
+  background-color: rgba(245, 242, 235, 0.25);
+  width: 100%;
+  transform-origin: left center;
+}
+
+.editorial-divider-dark {
+  height: 1px;
+  background-color: rgba(37, 42, 38, 0.15);
+  width: 100%;
+  transform-origin: left center;
+}
+
+/* HUD / Story Progress Indicator */
+.cinematic-hud {
+  position: fixed;
+  bottom: 2.5rem;
+  left: 3rem;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+@media (max-width: 768px) {
+  .cinematic-hud {
+    bottom: env(safe-area-inset-bottom, 1.5rem);
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 1.25rem);
+    left: 1.25rem;
+    gap: 0.5rem;
+  }
+
+  /* Shrink HUD progress track on mobile */
+  .hud-progress-track {
+    width: 64px !important;
+  }
+
+  /* Hide chapter label text on very small screens */
+  .hud-current-chapter {
+    font-size: 0.55rem !important;
+    letter-spacing: 0.15em !important;
+  }
+}
+
+.cinematic-hud.is-hidden {
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+}
+
+.hud-progress-track {
+  width: 100px;
+  height: 2px;
+  background: rgba(245, 242, 235, 0.25);
+  position: relative;
+  overflow: hidden;
+  border-radius: 9999px;
+}
+
+.hud-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: #F5F2EB;
+  border-radius: 9999px;
+  transition: width 0.08s linear;
+}
+
+/* Smooth transitions for interactive elements */
+.btn-editorial {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  cursor: pointer;
+  /* Minimum touch target (WCAG 2.5.5) */
+  min-height: 48px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+@media (max-width: 768px) {
+  .btn-editorial {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.8rem;
+    width: 100%;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+}
+
+.btn-editorial-light {
+  background-color: var(--color-warm-ivory);
+  color: var(--color-deep-forest);
+  border: 1px solid rgba(245, 242, 235, 0.3);
+}
+
+.btn-editorial-light:hover {
+  background-color: var(--color-white);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+.btn-editorial-dark {
+  background-color: var(--color-deep-forest);
+  color: var(--color-warm-ivory);
+  border: 1px solid var(--color-deep-forest);
+}
+
+.btn-editorial-dark:hover {
+  background-color: #0c1813;
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -6px rgba(20, 37, 30, 0.35);
+}
+
+.btn-editorial-ghost {
+  background-color: transparent;
+  color: var(--color-warm-ivory);
+  border: 1px solid rgba(245, 242, 235, 0.35);
+}
+
+.btn-editorial-ghost:hover {
+  background-color: rgba(245, 242, 235, 0.1);
+  border-color: rgba(245, 242, 235, 0.8);
+}
+
+/* Accordion transition styling */
+.accordion-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  opacity: 0;
+}
+
+.accordion-item.is-open .accordion-content {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.accordion-item.is-open .accordion-icon {
+  transform: rotate(45deg);
+}
+
+/* Services Interactive Hover styling */
+.service-row {
+  transition: background-color 0.35s ease, padding-left 0.35s ease;
+}
+
+.service-row:hover {
+  background-color: rgba(20, 37, 30, 0.03);
+}
+
+.service-row:hover .service-arrow {
+  transform: translate(6px, -6px);
+  color: var(--color-deep-forest);
+}
+
+/* Reduced Motion Safety */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ========================================================================= */
+/* MOBILE OPTIMIZATIONS — Comprehensive Touch & Small-Screen Polish          */
+/* ========================================================================= */
+
+/* ── 1. FLUID SECTION SPACING ── */
+@media (max-width: 767px) {
+  /* Replace fixed py-28/py-36 with fluid vertical rhythm */
+  section[id],
+  footer {
+    padding-top: var(--section-py) !important;
+    padding-bottom: var(--section-py) !important;
+    padding-left: var(--section-px) !important;
+    padding-right: var(--section-px) !important;
+  }
+
+  /* Final CTA section */
+  section.bg-deep-forest.text-center {
+    padding-top: clamp(3.5rem, 12vw, 8rem) !important;
+    padding-bottom: clamp(3.5rem, 12vw, 8rem) !important;
+  }
+}
+
+/* ── 2. FLUID TYPOGRAPHY — Cinematic Story Overlay ── */
+@media (max-width: 767px) {
+  #story-ch-1 h1 {
+    font-size: clamp(2.2rem, 11vw, 3.5rem) !important;
+    line-height: 1.1 !important;
+    margin-bottom: 1rem !important;
+  }
+
+  #story-ch-1 p {
+    font-size: clamp(0.9rem, 3.5vw, 1.1rem) !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  #story-ch-2 h2,
+  #story-ch-3 h2,
+  #story-ch-4 h2,
+  #story-ch-5 h2,
+  #story-ch-6 h2 {
+    font-size: clamp(1.8rem, 9vw, 3rem) !important;
+    line-height: 1.12 !important;
+  }
+
+  #story-ch-5 .grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+
+  /* Chapter padding on mobile */
+  .story-chapter {
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+  }
+
+  /* Scroll indicator: hide text, keep icon */
+  #story-ch-1 .absolute.bottom-10 {
+    right: 1rem !important;
+  }
+}
+
+/* ── 3. CINEMATIC CONTAINER — Reduce scroll distance on mobile ── */
+@media (max-width: 767px) {
+  /* Reduce the 600vh to 400vh on mobile to prevent marathon scrolling */
+  .cinematic-container {
+    height: 420vh !important;
+  }
+}
+
+/* ── 4. DEBUG HUD — Hidden on mobile by default ── */
+@media (max-width: 767px) {
+  #cinematicDebugHUD {
+    display: none !important;
+  }
+}
+
+/* ── 5. NAVBAR ── */
+@media (max-width: 767px) {
+  #mainNavbar {
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+}
+
+/* ── 6. MOBILE DRAWER — Safe area & full-width CTAs ── */
+@media (max-width: 767px) {
+  #mobileDrawer {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+    padding-top: max(2rem, env(safe-area-inset-top)) !important;
+    padding-bottom: max(2rem, env(safe-area-inset-bottom)) !important;
+  }
+
+  #mobileDrawer nav a {
+    font-size: clamp(1.5rem, 8vw, 2.25rem) !important;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+  }
+
+  #mobileDrawer nav {
+    gap: 0.25rem !important;
+  }
+
+  #mobileMenuBtn,
+  #mobileMenuCloseBtn {
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+}
+
+/* ── 7. ABOUT SECTION — Metrics grid ── */
+@media (max-width: 480px) {
+  /* 3-col metrics becomes 1-col stacked with dividers */
+  .grid.grid-cols-3 {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  .grid.grid-cols-3 > div {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(37, 42, 38, 0.12);
+  }
+
+  .grid.grid-cols-3 > div:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  /* Make the headline metrics numbers pop less aggressively */
+  .font-serif.text-3xl,
+  .font-serif.text-4xl {
+    font-size: clamp(1.75rem, 7vw, 2.25rem) !important;
+  }
+}
+
+/* ── 8. SERVICES SECTION — Rows ── */
+@media (max-width: 767px) {
+  .service-row {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    gap: 0.75rem !important;
+  }
+
+  .service-row .flex.items-start {
+    align-items: flex-start !important;
+    gap: 1rem !important;
+  }
+
+  /* Remove redundant tag on mobile to save space */
+  .service-row > .flex.items-center.gap-4 > span:first-child {
+    display: none;
+  }
+}
+
+/* ── 9. DIFERENCIAIS GRID — 1 col on mobile ── */
+@media (max-width: 639px) {
+  #diferenciais .grid {
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+  }
+
+  #diferenciais .grid > div {
+    min-height: auto !important;
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+    border-top: 1px solid rgba(245, 242, 235, 0.2) !important;
+    border-bottom: none !important;
+  }
+}
+
+/* ── 10. SEGMENTOS GRID — 1 col on mobile ── */
+@media (max-width: 639px) {
+  #quem-atendemos .grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  #quem-atendemos .grid > div {
+    min-height: auto !important;
+    padding: 1.5rem !important;
+    /* PME card: reset col-span override */
+    grid-column: span 1 !important;
+  }
+}
+
+/* ── 11. COMO FUNCIONA — Timeline ── */
+@media (max-width: 767px) {
+  #como-funciona .relative.border-l {
+    margin-left: 0.75rem !important;
+    padding-left: 1.5rem !important;
+  }
+
+  .timeline-step-card h3 {
+    font-size: clamp(1.35rem, 5vw, 1.875rem) !important;
+  }
+
+  .timeline-step-card p {
+    font-size: var(--text-sm) !important;
+  }
+}
+
+/* ── 12. SOCIAL PROOF QUOTE — Fluid sizing ── */
+@media (max-width: 767px) {
+  blockquote.font-serif {
+    font-size: clamp(1.3rem, 5.5vw, 2rem) !important;
+    line-height: 1.3 !important;
+    margin-bottom: 1.5rem !important;
+  }
+}
+
+/* ── 13. FAQ ACCORDION — Touch targets ── */
+@media (max-width: 767px) {
+  .faq-header {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    min-height: 48px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .faq-header span.font-serif {
+    font-size: clamp(1rem, 4.5vw, 1.35rem) !important;
+  }
+
+  .accordion-icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem !important;
+  }
+}
+
+/* ── 14. FINAL CTA — Fluid type ── */
+@media (max-width: 767px) {
+  #cinematic + * ~ section.bg-deep-forest h2,
+  section.bg-deep-forest.text-center h2 {
+    font-size: clamp(2rem, 9vw, 3.5rem) !important;
+    line-height: 1.1 !important;
+    margin-bottom: 1.25rem !important;
+  }
+
+  section.bg-deep-forest.text-center p {
+    font-size: clamp(0.9rem, 3.5vw, 1.125rem) !important;
+    margin-bottom: 2rem !important;
+  }
+}
+
+/* ── 15. CONTACT MODAL — Full-screen on mobile ── */
+@media (max-width: 639px) {
+  #contactModal {
+    align-items: flex-end !important;
+    padding: 0 !important;
+  }
+
+  #contactModal .modal-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 1.25rem 1.25rem 0 0 !important;
+    padding: 2rem 1.5rem !important;
+    padding-bottom: max(2rem, env(safe-area-inset-bottom)) !important;
+    max-height: 92dvh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #contactModal .modal-card h3 {
+    font-size: clamp(1.5rem, 6vw, 2rem) !important;
+  }
+
+  /* Stack email + phone fields vertically on small screens */
+  #contactForm .grid.md\:grid-cols-2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  #contactForm input,
+  #contactForm select {
+    font-size: 16px !important; /* Prevents iOS auto-zoom on focus */
+    min-height: 48px;
+  }
+
+  #contactForm button[type="submit"] {
+    min-height: 52px;
+  }
+}
+
+/* ── 16. FOOTER ── */
+@media (max-width: 767px) {
+  footer .grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  footer [class*="col-span"] {
+    grid-column: span 1 !important;
+  }
+
+  footer .border-t.pt-8 {
+    flex-direction: column;
+    gap: 1rem !important;
+    text-align: center;
+  }
+
+  footer .border-t .flex.items-center.gap-6 {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem !important;
+  }
+
+  footer a,
+  footer span {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+/* ── 17. SECTION HEADINGS — Global fluid scaling ── */
+@media (max-width: 767px) {
+  h1.font-serif,
+  .font-serif.text-7xl,
+  .font-serif.text-8xl {
+    font-size: clamp(2rem, 10vw, 3rem) !important;
+    line-height: 1.1 !important;
+  }
+
+  h2.font-serif,
+  .font-serif.text-5xl,
+  .font-serif.text-6xl {
+    font-size: clamp(1.75rem, 8vw, 2.5rem) !important;
+    line-height: 1.12 !important;
+  }
+}
+
+/* ── 18. SOUND TOGGLE — Hidden on mobile (no hover UX) ── */
+@media (max-width: 767px) {
+  #soundToggle {
+    display: none !important;
+  }
+}
+
+/* ── 19. PRELOADER — Mobile safe area ── */
+@media (max-width: 767px) {
+  #sitePreloader > div {
+    padding: 1rem;
+  }
+}
+
+/* ── 20. LENIS TOUCH — Prevent momentum conflicts on iOS ── */
+@media (max-width: 767px) {
+  html.lenis {
+    height: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+}
