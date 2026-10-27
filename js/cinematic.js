@@ -132,16 +132,6 @@ class CinematicScrollExperience {
     this.sticky = document.getElementById('cinematicSticky');
     this.video = document.getElementById('cinematicVideo');
     
-    // Debug HUD Elements
-    this.debugHud = document.getElementById('cinematicDebugHUD');
-    this.dbgProgress = document.getElementById('dbgProgress');
-    this.dbgTime = document.getElementById('dbgTime');
-    this.dbgDuration = document.getElementById('dbgDuration');
-    this.dbgChapter = document.getElementById('dbgChapter');
-    this.dbgState = document.getElementById('dbgState');
-    this.dbgSeeking = document.getElementById('dbgSeeking');
-    this.dbgPlayBtn = document.getElementById('dbgPlayTest');
-
     // User-facing HUD Elements
     this.hudFill = document.querySelector('.hud-progress-fill');
     this.hudChapter = document.querySelector('.hud-current-chapter');
@@ -181,11 +171,6 @@ class CinematicScrollExperience {
 
     // 4. Garante sincronização no estado inicial
     this.onScroll(0);
-
-    // 5. Debug button binding
-    if (this.dbgPlayBtn) {
-      this.dbgPlayBtn.addEventListener('click', () => this.unlockDecoder());
-    }
 
     // 6. Wake up decoder on first user scroll or interaction
     const unlockOnce = () => {
@@ -264,8 +249,9 @@ class CinematicScrollExperience {
         .then(() => {
           this.video.pause();
           this.video.currentTime = this.targetTime || 0;
+          if (this.video.currentTime !== undefined) {
           console.log('Video decoder successfully activated.');
-          if (this.dbgState) this.dbgState.textContent = 'Decodificador Ativo (Pronto)';
+        }
         })
         .catch((err) => {
           console.log('Decoder unlock notice:', err.message);
@@ -279,8 +265,6 @@ class CinematicScrollExperience {
         this.duration = this.video.duration;
       }
       console.log(`Video ready. Duration: ${this.duration.toFixed(2)}s, Dimensions: ${this.video.videoWidth}x${this.video.videoHeight}`);
-      if (this.dbgDuration) this.dbgDuration.textContent = `${this.duration.toFixed(2)}s`;
-      if (this.dbgState) this.dbgState.textContent = `Carregado (${this.video.videoWidth}x${this.video.videoHeight})`;
       
       // Update at initial scroll position
       this.seekToTime(this.targetTime);
@@ -293,8 +277,9 @@ class CinematicScrollExperience {
     // Seek completion handling with pending queue (PRESERVADO)
     this.video.addEventListener('seeked', () => {
       this.isSeeking = false;
-      if (this.dbgSeeking) this.dbgSeeking.textContent = 'false';
-      if (this.dbgTime) this.dbgTime.textContent = `${this.video.currentTime.toFixed(2)}s`;
+      if (this.video.currentTime !== undefined) {
+        // noop — seeking complete
+      }
 
       // If scroll position changed while the browser was decoding the previous frame
       if (this.pendingTime !== null) {
@@ -324,9 +309,7 @@ class CinematicScrollExperience {
 
     try {
       this.isSeeking = true;
-      if (this.dbgSeeking) this.dbgSeeking.textContent = 'true';
       this.video.currentTime = clamped;
-      if (this.dbgTime) this.dbgTime.textContent = `${clamped.toFixed(2)}s`;
     } catch (e) {
       this.isSeeking = false;
     }
@@ -389,13 +372,7 @@ class CinematicScrollExperience {
   }
 
   updateDebugHUD(progress, chapterName) {
-    if (!this.debugHud) return;
-    const pct = (progress * 100).toFixed(1);
-    if (this.dbgProgress) this.dbgProgress.textContent = `${pct}%`;
-    if (this.dbgChapter && chapterName) this.dbgChapter.textContent = chapterName;
-    if (this.dbgTime && this.video) {
-      this.dbgTime.textContent = `${this.video.currentTime.toFixed(2)}s`;
-    }
+    // Debug HUD removido — método mantido para compatibilidade
   }
 
   updateUserHUD(progress, chapterName) {

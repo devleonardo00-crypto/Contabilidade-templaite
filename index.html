@@ -141,39 +141,6 @@
     </div>
   </div>
 
-  <!-- DEBUG HUD (ETAPA 3 — Verificação Técnica em Tempo Real) -->
-  <div id="cinematicDebugHUD" class="fixed top-24 right-6 z-50 bg-[#0e1a15]/95 backdrop-blur-md border border-warm-ivory/25 px-5 py-4 font-mono text-[11px] text-warm-ivory shadow-2xl flex flex-col gap-2 select-none pointer-events-auto rounded max-w-xs">
-    <div class="flex items-center justify-between border-b border-warm-ivory/20 pb-1.5">
-      <span class="text-[9px] uppercase tracking-widest text-accent-gold font-bold flex items-center gap-1.5">
-        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        ÁPICE CINEMATIC HUD
-      </span>
-      <button onclick="document.getElementById('cinematicDebugHUD').classList.toggle('hidden')" class="text-warm-ivory/50 hover:text-warm-ivory text-xs px-1" title="Fechar HUD">✕</button>
-    </div>
-    <div class="flex justify-between">
-      <span class="text-warm-ivory/60">Scroll Progress:</span>
-      <span id="dbgProgress" class="text-emerald-400 font-bold">0.0%</span>
-    </div>
-    <div class="flex justify-between">
-      <span class="text-warm-ivory/60">Tempo do Vídeo:</span>
-      <span><span id="dbgTime" class="text-sky-300 font-bold">0.00s</span> / <span id="dbgDuration" class="text-warm-ivory/50">7.00s</span></span>
-    </div>
-    <div class="flex justify-between">
-      <span class="text-warm-ivory/60">Capítulo Atual:</span>
-      <span id="dbgChapter" class="text-amber-300 font-bold">01 / ABERTURA</span>
-    </div>
-    <div class="flex justify-between">
-      <span class="text-warm-ivory/60">Decodificador:</span>
-      <span id="dbgState" class="text-warm-ivory/80 text-[10px]">Iniciando...</span>
-    </div>
-    <div class="flex justify-between">
-      <span class="text-warm-ivory/60">Em Seeking:</span>
-      <span id="dbgSeeking" class="text-warm-ivory/70">false</span>
-    </div>
-    <button id="dbgPlayTest" class="mt-1 w-full py-1.5 px-2 bg-warm-ivory/15 hover:bg-warm-ivory/25 text-warm-ivory text-[10px] uppercase tracking-wider rounded border border-warm-ivory/20 transition-colors">
-      ▶ Ativar / Destravar Vídeo
-    </button>
-  </div>
 
   <!-- HUD: Cinematic Timeline Progress Bar & Story Index -->
   <div class="cinematic-hud text-warm-ivory">
